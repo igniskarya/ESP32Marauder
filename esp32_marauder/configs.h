@@ -1041,7 +1041,7 @@
 
     #ifdef MARAUDER_V7
       #define SCREEN_CHAR_WIDTH 40
-      //#define HAS_ILI9341
+      #define HAS_ILI9341
     
       #define BANNER_TEXT_SIZE 2
 
