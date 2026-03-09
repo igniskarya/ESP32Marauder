@@ -747,9 +747,9 @@ String GpsInterface::getNmeaNotparsed() {
 }
 
 void GpsInterface::main() {
-  while (Serial1.available()) {
+  while (Serial2.available()) {
     //Fetch the character one by one
-    char c = Serial1.read();
+    char c = Serial2.read();
     //Serial.print(c);
     //Pass the character to the library
     nmea.process(c);
