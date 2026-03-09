@@ -14,6 +14,7 @@ Display::Display()
 
 int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_hold) {
   #ifdef HAS_ILI9341
+    #ifdef HAS_ST7789
     for (uint8_t b = BUTTON_ARRAY_LEN; b < BUTTON_ARRAY_LEN + 3; b++) {
       if (pressed && this->key[b].contains(*x, *y)) {
         this->key[b].press(true);  // tell the button it is pressed
@@ -35,6 +36,7 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
       }
     }
 
+  #endif
   #endif
 
   return -1;
