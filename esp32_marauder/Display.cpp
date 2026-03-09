@@ -6,8 +6,8 @@
 Display::Display()
 #ifdef HAS_CYD_TOUCH
   : touchscreenSPI(VSPI),
-    //touchscreen(XPT2046_CS, XPT2046_IRQ),
-    touchscreen(GT911_CS, GT911_IRQ)
+    touchscreen(XPT2046_CS, XPT2046_IRQ)
+    //touchscreen(GT911_CS, GT911_IRQ)
 #endif
 {
 }
