@@ -2520,16 +2520,16 @@
       #define GPS_RX 13
     #elif defined(MARAUDER_CYD_MICRO)
       #define GPS_SERIAL_INDEX 2
-      #define GPS_TX 22 // Whoever thought it would be a good idea to use UART0 for GPS...
-      #define GPS_RX 27 // Now maybe we will be able to use CLI
+      #define GPS_TX 1 // Whoever thought it would be a good idea to use UART0 for GPS...
+      #define GPS_RX 3 // Now maybe we will be able to use CLI
     #elif defined(MARAUDER_CYD_2USB)
       #define GPS_SERIAL_INDEX 2
-      #define GPS_TX 22 // Whoever thought it would be a good idea to use UART0 for GPS...
-      #define GPS_RX 27 // Now maybe we will be able to use CLI
+      #define GPS_TX 1 // Whoever thought it would be a good idea to use UART0 for GPS...
+      #define GPS_RX 3 // Now maybe we will be able to use CLI
     #elif defined(MARAUDER_CYD_3_5_INCH)
       #define GPS_SERIAL_INDEX 2
-      #define GPS_TX 21
-      #define GPS_RX 25
+      #define GPS_TX 1
+      #define GPS_RX 3
     #elif defined(MARAUDER_CYD_GUITION)
       #define GPS_SERIAL_INDEX 2
       #define GPS_TX 21 // Fits the extended I/O
