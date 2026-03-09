@@ -2743,6 +2743,12 @@
     #endif
 
     #ifdef MARAUDER_CYD_3_5_INCH
+      
+  #define CYD_GT911_SDA   33
+  #define CYD_GT911_SCL   32
+  #define CYD_GT911_RST   21    // RST on GPIO21 (matches Bruce firmware)
+  #define CYD_GT911_INT   25
+   
       #define SD_MISO      19
       #define SD_MOSI      23
       #define SD_SCK       18
