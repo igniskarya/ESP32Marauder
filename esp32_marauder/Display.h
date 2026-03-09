@@ -18,6 +18,7 @@
 
 #ifdef HAS_CYD_TOUCH
   #include <XPT2046_Touchscreen.h>
+  #include <GT911_Touchscreen.h>
 #endif
 
 // WiFi stuff
@@ -158,3 +159,4 @@ class Display
 };
 #endif
 #endif
+
