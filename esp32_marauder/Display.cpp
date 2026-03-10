@@ -12,7 +12,7 @@ Display::Display()
 }
 
 int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_hold) {
-  #ifdef HAS_ILI9341_2
+  #ifdef HAS_ILI9341 or defined HAS_ST7789
     for (uint8_t b = BUTTON_ARRAY_LEN; b < BUTTON_ARRAY_LEN + 3; b++) {
       if (pressed && this->key[b].contains(*x, *y)) {
         this->key[b].press(true);  // tell the button it is pressed
@@ -40,7 +40,7 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
 }
 
 uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
-  #ifdef HAS_ILI9341_2
+  #ifdef HAS_ILI9341 or defined HAS_ST7789
     if (!this->headless_mode)
       #ifndef HAS_CYD_TOUCH
         return this->tft.getTouch(x, y, threshold);
@@ -130,7 +130,7 @@ void Display::setCalData(bool landscape) {
       #elif defined(TFT_DIY)
         uint16_t calData[5] = { 339, 3470, 237, 3438, 2 }; // tft.setRotation(0); // Portrait with DIY TFT
       #endif
-      #ifdef HAS_ILI9341_2
+      #ifdef HAS_ILI9341 or defined HAS_ST7789
         tft.setTouch(calData);
       #endif
     }
@@ -144,7 +144,7 @@ void Display::setCalData(bool landscape) {
       #else if defined(TFT_DIY)
         uint16_t calData[5] = { 213, 3469, 320, 3446, 1 }; // Landscape TFT DIY
       #endif
-      #ifdef HAS_ILI9341_2
+      #ifdef HAS_ILI9341 or defined HAS_ST7789
         tft.setTouch(calData);
       #endif
     }
@@ -673,7 +673,7 @@ void Display::showCenterText(String text, int y)
 
 
 // Function to setup hardware scroll for TFT screen
-/*void Display::setupScrollArea(uint16_t tfa, uint16_t bfa) {
+void Display::setupScrollArea(uint16_t tfa, uint16_t bfa) {
   #ifdef HAS_ILI9341
     #ifdef HAS_ST7796
       tft.writecommand(0x33);
@@ -689,10 +689,10 @@ void Display::showCenterText(String text, int y)
     tft.writedata(bfa >> 8);           // Bottom Fixed Area line count
     tft.writedata(bfa);
   #endif
-}*/
+}
 
 
-/*void Display::scrollAddress(uint16_t vsp) {
+void Display::scrollAddress(uint16_t vsp) {
   #ifdef HAS_ILI9341
     #ifdef HAS_ST7789
       tft.writecommand(ST7789_VSCRDEF); // Vertical scroll definition
@@ -704,7 +704,7 @@ void Display::showCenterText(String text, int y)
     tft.writedata(vsp>>8);
     tft.writedata(vsp);
   #endif
-}*/
+}
 
 void Display::updateBanner(String msg)
 {
