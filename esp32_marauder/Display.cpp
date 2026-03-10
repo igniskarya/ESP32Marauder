@@ -673,7 +673,7 @@ void Display::showCenterText(String text, int y)
 
 
 // Function to setup hardware scroll for TFT screen
-void Display::setupScrollArea(uint16_t tfa, uint16_t bfa) {
+/*void Display::setupScrollArea(uint16_t tfa, uint16_t bfa) {
   #ifdef HAS_ILI9341
     #ifdef HAS_ST7796
       tft.writecommand(0x33);
@@ -689,10 +689,10 @@ void Display::setupScrollArea(uint16_t tfa, uint16_t bfa) {
     tft.writedata(bfa >> 8);           // Bottom Fixed Area line count
     tft.writedata(bfa);
   #endif
-}
+}*/
 
 
-void Display::scrollAddress(uint16_t vsp) {
+/*void Display::scrollAddress(uint16_t vsp) {
   #ifdef HAS_ILI9341
     #ifdef HAS_ST7789
       tft.writecommand(ST7789_VSCRDEF); // Vertical scroll definition
@@ -704,7 +704,7 @@ void Display::scrollAddress(uint16_t vsp) {
     tft.writedata(vsp>>8);
     tft.writedata(vsp);
   #endif
-}
+}*/
 
 void Display::updateBanner(String msg)
 {
