@@ -2746,7 +2746,9 @@
 
    #define TOUCH_SDA 33 // I2C Data
   #define TOUCH_SCL 32 // I2C Clock
-  #define TOUCH_INT 36 // Interrupt Pin
+  #define TOUCH_INT 25 // Interrupt Pin
+  #define TOUCH_RST 21
+
    
       #define SD_MISO      19
       #define SD_MOSI      23
