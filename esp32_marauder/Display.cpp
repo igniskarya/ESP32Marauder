@@ -12,7 +12,7 @@ Display::Display()
 }
 
 int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_hold) {
-  #if defined  HAS_ILI9341 or defined HAS_ST7789
+  #ifdef HAS_ILI9341_2
     for (uint8_t b = BUTTON_ARRAY_LEN; b < BUTTON_ARRAY_LEN + 3; b++) {
       if (pressed && this->key[b].contains(*x, *y)) {
         this->key[b].press(true);  // tell the button it is pressed
@@ -40,12 +40,12 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
 }
 
 uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
-  #if defined  HAS_ILI9341 or defined HAS_ST7789
+  #ifdef HAS_ILI9341_2
     if (!this->headless_mode)
       #ifndef HAS_CYD_TOUCH
         return this->tft.getTouch(x, y, threshold);
       #else
-        #if (this->touchscreen.tirqTouched() && this->touchscreen.touched()) {
+        if (this->touchscreen.tirqTouched() && this->touchscreen.touched()) {
           TS_Point p = this->touchscreen.getPoint();
 
           //*x = map(p.x, 200, 3700, 1, TFT_WIDTH);
@@ -130,7 +130,7 @@ void Display::setCalData(bool landscape) {
       #elif defined(TFT_DIY)
         uint16_t calData[5] = { 339, 3470, 237, 3438, 2 }; // tft.setRotation(0); // Portrait with DIY TFT
       #endif
-      #if defined  HAS_ILI9341 or defined HAS_ST7789
+      #ifdef HAS_ILI9341_2
         tft.setTouch(calData);
       #endif
     }
@@ -144,7 +144,7 @@ void Display::setCalData(bool landscape) {
       #else if defined(TFT_DIY)
         uint16_t calData[5] = { 213, 3469, 320, 3446, 1 }; // Landscape TFT DIY
       #endif
-      #if defined  HAS_ILI9341 or defined HAS_ST7789
+      #ifdef HAS_ILI9341_2
         tft.setTouch(calData);
       #endif
     }
@@ -174,8 +174,8 @@ void Display::RunSetup() {
 
   tft.setCursor(0, 0);
 
-  
- #if defined  HAS_ILI9341 or defined HAS_ST7789
+  #ifdef HAS_ILI9341_2
+
     #ifndef HAS_CYD_TOUCH
       this->setCalData();
     #endif
