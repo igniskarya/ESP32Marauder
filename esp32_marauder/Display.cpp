@@ -6,7 +6,8 @@
 Display::Display()
 #ifdef HAS_CYD_TOUCH
   : touchscreenSPI(VSPI),
-    touchscreen(XPT2046_CS, XPT2046_IRQ)
+    touchscreen(XPT2046_CS, XPT2046_IRQ),
+    touchscreen(TOUCH_SDA, TOUCH_INT)
 #endif
 {
 }
@@ -43,7 +44,7 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
 
 uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
   #ifdef HAS_ILI9341
-   #ifdef HAS_ST7789
+
     if (!this->headless_mode)
       #ifndef HAS_CYD_TOUCH
         return this->tft.getTouch(x, y, threshold);
