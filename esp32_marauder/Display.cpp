@@ -13,8 +13,7 @@ Display::Display()
 }
 
 int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_hold) {
-  #ifdef HAS_ILI9341 
-    #ifdef HAS_ST7789
+  #if defined (HAS_ILI9341) or defined (HAS_ST7789)
     for (uint8_t b = BUTTON_ARRAY_LEN; b < BUTTON_ARRAY_LEN + 3; b++) {
       if (pressed && this->key[b].contains(*x, *y)) {
         this->key[b].press(true);  // tell the button it is pressed
@@ -37,13 +36,12 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
     }
 
   #endif
-  #endif
 
   return -1;
 }
 
 uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
-  #ifdef HAS_ILI9341
+  #if defined (HAS_ILI9341) or defined (HAS_ST7789)
 
     if (!this->headless_mode)
       #ifndef HAS_CYD_TOUCH
@@ -86,7 +84,7 @@ uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
       #endif
     else
       return !this->headless_mode;
-  #endif
+  
   #endif
 
   return 0;
@@ -135,10 +133,8 @@ void Display::setCalData(bool landscape) {
       #elif defined(TFT_DIY)
         uint16_t calData[5] = { 339, 3470, 237, 3438, 2 }; // tft.setRotation(0); // Portrait with DIY TFT
       #endif
-      #ifdef HAS_ILI9341
-        #ifdef HAS_ST7789
+        #if defined (HAS_ILI9341) or defined (HAS_ST7789)
         tft.setTouch(calData);
-       #endif
       #endif
     }
     else {
@@ -151,10 +147,8 @@ void Display::setCalData(bool landscape) {
       #else if defined(TFT_DIY)
         uint16_t calData[5] = { 213, 3469, 320, 3446, 1 }; // Landscape TFT DIY
       #endif
-      #ifdef HAS_ILI9341
-        #ifdef HAS_ST7789
+      #if defined (HAS_ILI9341) or defined (HAS_ST7789)
         tft.setTouch(calData);
-       #endif
       #endif
     }
   #endif
@@ -183,12 +177,11 @@ void Display::RunSetup() {
 
   tft.setCursor(0, 0);
 
-  #ifdef HAS_ILI9341
-    #ifdef HAS_ST7789
-
+  
+  #if defined (HAS_ILI9341) or defined (HAS_ST7789)
     #ifndef HAS_CYD_TOUCH
       this->setCalData();
-    #endif
+    
     #endif
 
   #endif
