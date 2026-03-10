@@ -1285,7 +1285,7 @@
 
       #define MAX_SCREEN_BUFFER 21
 
-      #define SCREEN_ORIENTATION 1
+      #define SCREEN_ORIENTATION 3
     
       #define CHAR_WIDTH 12
       #define SCREEN_WIDTH TFT_WIDTH
@@ -1334,8 +1334,8 @@
       #define CHAN_PER_PAGE 7
 
       #define SCREEN_CHAR_WIDTH 40
-      //#define HAS_ILI9341
-      #define HAS_ST7789
+      #define HAS_ILI9341
+      //#define HAS_ST7789
     
       #define BANNER_TEXT_SIZE 2
 
