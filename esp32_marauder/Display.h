@@ -90,6 +90,7 @@ class Display
     #ifdef HAS_CYD_TOUCH
       SPIClass touchscreenSPI;
       XPT2046_Touchscreen touchscreen;
+      GT911_Touchscreen touchscreen;
     #endif
 
     bool printing = false;
@@ -159,4 +160,5 @@ class Display
 };
 #endif
 #endif
+
 
