@@ -6,15 +6,13 @@
 Display::Display()
 #ifdef HAS_CYD_TOUCH
   : touchscreenSPI(VSPI),
-    touchscreen(XPT2046_CS, XPT2046_IRQ),
-    touchscreen(GT911_CS, GT911_INT)
+    touchscreen(XPT2046_CS, XPT2046_IRQ)
 #endif
 {
 }
 
 int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_hold) {
   #ifdef HAS_ILI9341
-    #ifdef HAS_ST7796
     for (uint8_t b = BUTTON_ARRAY_LEN; b < BUTTON_ARRAY_LEN + 3; b++) {
       if (pressed && this->key[b].contains(*x, *y)) {
         this->key[b].press(true);  // tell the button it is pressed
@@ -37,14 +35,12 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
     }
 
   #endif
-  #endif
 
   return -1;
 }
 
 uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
-  //#ifdef HAS_ILI9341
-  #ifdef HAS_ST7796
+  #ifdef HAS_ILI9341
     if (!this->headless_mode)
       #ifndef HAS_CYD_TOUCH
         return this->tft.getTouch(x, y, threshold);
@@ -167,8 +163,7 @@ void Display::RunSetup() {
   #endif
 
   #ifdef HAS_CYD_TOUCH
-    this->touchscreenSPI.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS)
-    this->touchscreenSPI.begin(GT911_SDA, GT911_SCL, GT911_RST);
+    this->touchscreenSPI.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
     this->touchscreen.begin(touchscreenSPI);
     this->touchscreen.setRotation(0);
   #endif
