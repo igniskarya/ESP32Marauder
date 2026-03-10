@@ -19,6 +19,7 @@
 #ifdef HAS_CYD_TOUCH
   #include <XPT2046_Touchscreen.h>
   #include <TAMC_GT911.h>
+  TAMC_GT911 tp = TAMC_GT911(TOUCH_SDA, TOUCH_SCL, TOUCH_INT, TOUCH_RST, TOUCH_WIDTH, TOUCH_HEIGHT);
 #endif
 
 // WiFi stuff
@@ -159,4 +160,5 @@ class Display
 };
 #endif
 #endif
+
 
