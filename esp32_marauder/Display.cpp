@@ -183,9 +183,11 @@ void Display::RunSetup() {
   tft.setCursor(0, 0);
 
   #ifdef HAS_ILI9341
+    #ifdef HAS_ST7789
 
     #ifndef HAS_CYD_TOUCH
       this->setCalData();
+    #endif
     #endif
 
   #endif
