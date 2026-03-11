@@ -24,5 +24,4 @@
 	url = https://github.com/justcallmekoko/SwitchLib.git
 [submodule "esp32_marauder/libraries/GT911"]
 	path = esp32_marauder/libraries/GT911
-	url = url=https://github.com/tamctec/gt911-arduino
-
+	url =https://github.com/tamctec/gt911-arduino.git
