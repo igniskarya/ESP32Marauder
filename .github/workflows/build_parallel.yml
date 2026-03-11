@@ -117,6 +117,13 @@ jobs:
           ref: v1.4
           path: CustomXPT2046_Touchscreen
 
+      - name : Install TAMC_GT911
+         uses: actions/checkout@v2   
+         with:
+         repository: TAMCTec/gt911-arduino
+          ref: v1.0.2
+  platform-url: https://github.com/tamctec/gt911-arduino
+
       - name: Install lv_arduino
         uses: actions/checkout@v2
         with:
