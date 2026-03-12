@@ -2600,7 +2600,7 @@
     #elif defined(MARAUDER_CYD_2USB)
       #define PIN 4
     #elif defined(MARAUDER_CYD_3_5_INCH)
-      #define PIN 22
+      #define PIN 4
     #elif defined(MARAUDER_C5)
       #define PIN 27
     #elif defined(MARAUDER_V8)
