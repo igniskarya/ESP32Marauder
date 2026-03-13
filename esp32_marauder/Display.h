@@ -9,18 +9,18 @@
 
 #include <FS.h>
 #include <functional>
-#include <JPEGDecoder.h>
 #include <LinkedList.h>
 #include <SPI.h>
-#include <lvgl.h>
-#include <Ticker.h>
 #include "SPIFFS.h"
 #include "Assets.h"
-#include <Wire.h>
+
 #include <TFT_eSPI.h>
 
+#ifdef HAS_CYD_TOUCH
+  #include <XPT2046_Touchscreen.h>
+#endif
 
-
+// WiFi stuff
 #define OTA_UPDATE 100
 #define SHOW_INFO 101
 #define WIFI_SCAN_OFF 0
@@ -46,12 +46,30 @@
 #define MAGENTA_KEY ";mgn;"
 #define WHITE_KEY ";wht;"
 
+#define UP_BUTTON     0
+#define SELECT_BUTTON 1
+#define DOWN_BUTTON   2
+
+#define EXIT_BUTTON_INDEX 0 // 6
+#define CHAN_MINUS_INDEX  1 // 4
+#define CHAN_PLUS_INDEX   2 // 5
+#define CHAN_HOP_INDEX    5 // 7
+#define X_MINUS_INDEX     6
+#define X_PLUS_INDEX      7
+#define Y_MINUS_INDEX     8
+#define Y_PLUS_INDEX      9
+
 class Display
 {
   private:
     bool SwitchOn = false;
+    
     bool run_setup = true;
+    
+    // For the byte we read from the serial port
     byte data = 0;
+    
+    // A few test variables used during debugging
     boolean change_colour = 1;
     boolean selected = 1;
 
@@ -65,9 +83,13 @@ class Display
   public:
     Display();
     TFT_eSPI tft = TFT_eSPI();
-    TFT_eSPI_Button key[BUTTON_ARRAY_LEN];
-
+    TFT_eSPI_Button key[BUTTON_ARRAY_LEN + 4];
     const String PROGMEM version_number = MARAUDER_VERSION;
+
+    #ifdef HAS_CYD_TOUCH
+      SPIClass touchscreenSPI;
+      XPT2046_Touchscreen touchscreen;
+    #endif
 
     bool printing = false;
     bool loading = false;
@@ -86,42 +108,53 @@ class Display
       LinkedList<String>* screen_buffer;
     #endif
 
+    // The initial y coordinate of the top of the bottom text line
     uint16_t yDraw = YMAX - BOT_FIXED_AREA - TEXT_HEIGHT;
+
+    // Keep track of the drawing x coordinate
     uint16_t xPos = 0;
+
+    // The initial y coordinate of the top of the scrolling area
     uint16_t yStart = TOP_FIXED_AREA_2;
+    // yArea must be a integral multiple of TEXT_HEIGHT
     uint16_t yArea = YMAX - TOP_FIXED_AREA_2 - BOT_FIXED_AREA;
 
-    int blank[19];
+    // We have to blank the top line each time the display is scrolled, but this takes up to 13 milliseconds
+    // for a full width line, meanwhile the serial buffer may be filling... and overflowing
+    // We can speed up scrolling of short text lines by just blanking the character we drew
+    int blank[19]; // We keep all the strings pixel lengths to optimise the speed of the top line blanking
 
+    int8_t menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_hold = false);
+    uint8_t updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold = 600);
+    bool isTouchHeld(uint16_t threshold = 600);
     void tftDrawRedOnOffButton();
     void tftDrawGreenOnOffButton();
     void tftDrawGraphObjects(byte x_scale);
-    void tftDrawEapolColorKey();
+    void tftDrawEapolColorKey(bool filter = false);
     void tftDrawColorKey();
     void tftDrawXScaleButtons(byte x_scale);
     void tftDrawYScaleButtons(byte y_scale);
     void tftDrawChannelScaleButtons(int set_channel, bool lnd_an = true);
     void tftDrawExitScaleButtons(bool lnd_an = true);
+    void tftDrawChanHopButton(bool lnd_an = true, bool en = false);
     void buildBanner(String msg, int xpos);
     void clearScreen();
     void displayBuffer(bool do_clear = false);
-    // void drawJpeg(const char *filename, int xpos, int ypos); // Commented out in current code
+    //void drawJpeg(const char *filename, int xpos, int ypos);
     void getTouchWhileFunction(bool pressed);
-    void initScrollValues(bool tte = false);
-    void jpegInfo();
-    void jpegRender(int xpos, int ypos);
-    void listDir(fs::FS &fs, const char * dirname, uint8_t levels);
-    void listFiles();
-    void main(uint8_t scan_mode);
+    //void initScrollValues(bool tte = false);
+    //void jpegInfo();
+    //void jpegRender(int xpos, int ypos);
+    void init();
     void RunSetup();
-    void scrollAddress(uint16_t vsp);
-    int scroll_line(uint32_t color);
-    void setupScrollArea(uint16_t tfa, uint16_t bfa);
+    //void scrollAddress(uint16_t vsp);
+    //int scroll_line(uint32_t color);
+    //void setupScrollArea(uint16_t tfa, uint16_t bfa);
     void showCenterText(String text, int y);
     void touchToExit();
     void twoPartDisplay(String center_text);
     void updateBanner(String msg);
+    void setCalData(bool landscape = false);
 };
-
 #endif
 #endif
